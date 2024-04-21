@@ -27,6 +27,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.nodejs_version }}
+      - name: Cache NPM dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ matrix.nodejs_version }}-${{ hashFiles('package-lock.json') }}
       - name: Install Dependencies
         run: npm install
       - name: Run Unit Tests
